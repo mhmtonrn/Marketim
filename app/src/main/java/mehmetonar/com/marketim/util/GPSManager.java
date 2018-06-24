@@ -143,7 +143,7 @@ public class GPSManager extends Service implements LocationListener {
     public double getLatitude(){
         if(location != null){
             latitude = location.getLatitude();
-            Toast.makeText(mContext, "Your Location is - \nLat: " + latitude, Toast.LENGTH_LONG).show();
+
         }
 
         //return latitude;
@@ -156,7 +156,7 @@ public class GPSManager extends Service implements LocationListener {
     public double getLongitude(){
         if(location !=null){
             longitude = location.getLongitude();
-            Toast.makeText(mContext, "Your Location is - \nLng: " + longitude, Toast.LENGTH_LONG).show();
+
         }
 
         //return longitude;

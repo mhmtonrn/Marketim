@@ -36,7 +36,10 @@ public class MapsFragment extends Fragment {
 
     public MapsFragment(Context c) {
         this.mContext = c;
+        startGetLocation();
     }
+
+
 
 
     @Override
@@ -50,7 +53,13 @@ public class MapsFragment extends Fragment {
         View view = inflater.inflate(R.layout.fragment_maps, container, false);
 
         mMapView = (MapView) view.findViewById(R.id.map);
+
+
         mMapView.onCreate(savedInstanceState);
+
+
+
+
 
         mMapView.onResume(); // needed to get the map to display immediately
         //declare arraylist
@@ -64,25 +73,30 @@ public class MapsFragment extends Fragment {
     @Override
     public void onStart() {
         super.onStart();
-        getLocation();
-        getMapView(mMapView,getLocation());
+        startGetLocation();
     }
 
     @Override
     public void onPause() {
         super.onPause();
-        getLocation();
-        getMapView(mMapView,getLocation());
+
     }
 
     @Override
     public void onResume() {
         super.onResume();
-        getLocation();
-        getMapView(mMapView,getLocation());
+        startGetLocation();
     }
 
     private void getMapView(MapView mMapView, final LatLng location) {
+
+        Log.i("MyLocation", location.toString());
+        if (location.toString().equals("lat/lng: (0.0,0.0)")){
+            startGetLocation();
+            while (!location.toString().equals("lat/lng: (0.0,0.0)")){
+
+            }
+        }
 
         mMapView.getMapAsync(new OnMapReadyCallback() {
             @Override
@@ -114,4 +128,22 @@ public class MapsFragment extends Fragment {
         LatLng currentLocation = new LatLng(latitu,longtitu);
         return currentLocation;
     }
+
+    private void startGetLocation() {
+        new Thread(new Runnable() {
+            @Override
+            public void run() {
+                try {
+                    getLocation();
+                    getMapView(mMapView,getLocation());
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
+
+            }
+        }).run();
+    }
+
+
+
 }

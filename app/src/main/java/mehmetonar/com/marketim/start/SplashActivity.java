@@ -1,9 +1,13 @@
 package mehmetonar.com.marketim.start;
 
 import android.Manifest;
+import android.app.AlertDialog;
+import android.app.Application;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.pm.PackageManager;
+import android.location.LocationManager;
 import android.net.ConnectivityManager;
 import android.os.Handler;
 import android.provider.Settings;
@@ -28,6 +32,7 @@ public class SplashActivity extends AppCompatActivity {
     private Intent splashIntent;
     private Handler handler;
     private LinearLayout layout;
+    private LocationManager locationManager;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -38,16 +43,17 @@ public class SplashActivity extends AppCompatActivity {
         actionBar.hide();
         layout = findViewById(R.id.splashLayout);
         splashIntent = new Intent(SplashActivity.this, LayoutMainActivity.class);
-        //splashScreen(6000);
+
         handler = new Handler();
 
-        ActivityCompat.requestPermissions(this,new String[]{Manifest.permission.ACCESS_FINE_LOCATION}, 1);
+
 
     }
 
     @Override
     protected void onStart() {
         super.onStart();
+        ActivityCompat.requestPermissions(this,new String[]{Manifest.permission.ACCESS_FINE_LOCATION}, 1);
 
 
     }
@@ -122,8 +128,18 @@ public class SplashActivity extends AppCompatActivity {
             @Override
             public void run() {
                 if (isInternetAvailable()||isNetworkConnected()){
-                    startActivity(splashIntent);
-                    finish();
+                    locationManager = (LocationManager) getApplicationContext().getSystemService(LOCATION_SERVICE);
+
+
+                    boolean isGPSEnabled = locationManager.isProviderEnabled(LocationManager.GPS_PROVIDER);
+                    if (isGPSEnabled){
+                        startActivity(splashIntent);
+                        finish();
+                    }else {
+                        showSettingsAlert();
+
+                }
+
                 }else {
                     Snackbar snackbar = Snackbar
                             .make(layout, R.string.net_fail_message, Snackbar.LENGTH_INDEFINITE).setAction(R.string.open_net, new View.OnClickListener() {
@@ -138,5 +154,37 @@ public class SplashActivity extends AppCompatActivity {
 
             }
         },3000);
+    }
+
+
+    public void showSettingsAlert(){
+        AlertDialog.Builder alertDialog = new AlertDialog.Builder(this);
+
+        //Setting Dialog Title
+        alertDialog.setTitle("GPS is settings");
+
+        //Setting Dialog Message
+        alertDialog.setMessage("GPS is not enabled.Do you want to go to settings menu?");
+
+        //On pressing Settings button
+        alertDialog.setPositiveButton("Settings", new DialogInterface.OnClickListener() {
+            public void onClick(DialogInterface dialog,int which){
+                Intent intent = new Intent(Settings.ACTION_LOCATION_SOURCE_SETTINGS);
+                startActivityForResult(intent,1);
+
+            }
+        });
+
+        //On pressing cancel button
+        alertDialog.setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
+            public void onClick(DialogInterface dialog,int which){
+                dialog.cancel();
+            }
+
+        });
+
+        //Showing Alert Message
+        alertDialog.show();
+
     }
 }
