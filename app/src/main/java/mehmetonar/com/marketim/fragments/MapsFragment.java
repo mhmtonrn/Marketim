@@ -13,6 +13,8 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
+import android.widget.TextView;
 
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
@@ -20,13 +22,22 @@ import com.google.android.gms.maps.MapView;
 import com.google.android.gms.maps.OnMapReadyCallback;
 import com.google.android.gms.maps.model.CameraPosition;
 import com.google.android.gms.maps.model.LatLng;
+import com.google.android.gms.maps.model.Marker;
+import com.google.android.gms.maps.model.MarkerOptions;
+
+import java.util.ArrayList;
 
 import mehmetonar.com.marketim.R;
+import mehmetonar.com.marketim.data.AddPhotoBottomDialogFragment;
+import mehmetonar.com.marketim.data.LocationHelper;
 import mehmetonar.com.marketim.util.GPSManager;
 
 
 @SuppressLint("ValidFragment")
 public class MapsFragment extends Fragment {
+
+    //Component Declaration
+
 
     //declaration
     public Context mContext;
@@ -53,22 +64,15 @@ public class MapsFragment extends Fragment {
         View view = inflater.inflate(R.layout.fragment_maps, container, false);
 
         mMapView = (MapView) view.findViewById(R.id.map);
-
-
         mMapView.onCreate(savedInstanceState);
-
-
-
-
-
         mMapView.onResume(); // needed to get the map to display immediately
-        //declare arraylist
-
 
 
 
         return view;
     }
+
+
 
     @Override
     public void onStart() {
@@ -92,10 +96,7 @@ public class MapsFragment extends Fragment {
 
         Log.i("MyLocation", location.toString());
         if (location.toString().equals("lat/lng: (0.0,0.0)")){
-            startGetLocation();
-            while (!location.toString().equals("lat/lng: (0.0,0.0)")){
-
-            }
+          startGetLocation();
         }
 
         mMapView.getMapAsync(new OnMapReadyCallback() {
@@ -112,12 +113,61 @@ public class MapsFragment extends Fragment {
                 Log.i("location:",String.valueOf(location.longitude));
                 LatLng currentLocation = new LatLng(location.latitude,location.longitude);
 
+                //fiil the map markers
+                getMarker();
+
+
                 float zoomLevel = (float) 12.0;
                 googleMap.moveCamera(CameraUpdateFactory.newLatLngZoom(currentLocation, zoomLevel));
                 CameraPosition cameraPosition = new CameraPosition.Builder().target(currentLocation).zoom(zoomLevel).build();
                 googleMap.animateCamera(CameraUpdateFactory.newCameraPosition(cameraPosition));
+
+                googleMap.setOnMarkerClickListener(new GoogleMap.OnMarkerClickListener() {
+                    @Override
+                    public boolean onMarkerClick(Marker marker) {
+                        Log.i("Tag","tsg");
+                        AddPhotoBottomDialogFragment addPhotoBottomDialogFragment = new AddPhotoBottomDialogFragment(getContext(),marker);
+                        addPhotoBottomDialogFragment.show(getFragmentManager(),"add_photo_dialog_fragment");
+
+
+
+                        return true;
+                    }
+                });
+
             }
         });
+
+
+
+    }
+
+
+    private void getMarker() {
+
+        new Thread(new Runnable() {
+            @Override
+            public void run() {
+                try {
+                    LocationHelper locationHelper = new LocationHelper();
+                    ArrayList<LatLng> locationList = locationHelper.getMarkerLocation();
+
+                    for (LatLng latLng:locationList){
+                        MarkerOptions markerOptions = new MarkerOptions();
+                        markerOptions.position(latLng);
+                        markerOptions.title("Marker Başlık");
+                        googleMap.animateCamera(CameraUpdateFactory.newLatLng(latLng));
+                        googleMap.addMarker(markerOptions);
+
+                    }
+
+
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
+
+            }
+        }).run();
     }
 
 

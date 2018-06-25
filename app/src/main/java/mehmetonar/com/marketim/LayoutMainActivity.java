@@ -16,6 +16,7 @@ import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
 
+import mehmetonar.com.marketim.data.AddPhotoBottomDialogFragment;
 import mehmetonar.com.marketim.fragments.MapsFragment;
 import mehmetonar.com.marketim.sing.AuthStatus;
 import mehmetonar.com.marketim.sing.SingInActivity;
@@ -85,6 +86,8 @@ public class LayoutMainActivity extends AppCompatActivity
 
         //noinspection SimplifiableIfStatement
         if (id == R.id.action_settings) {
+            AddPhotoBottomDialogFragment addPhotoBottomDialogFragment = new AddPhotoBottomDialogFragment(this,null);
+            addPhotoBottomDialogFragment.show(getSupportFragmentManager(),"add_photo_dialog_fragment");
             return true;
         }
 
