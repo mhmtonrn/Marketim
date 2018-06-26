@@ -4,8 +4,6 @@ import android.Manifest;
 import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.pm.PackageManager;
-import android.location.Location;
-import android.net.Uri;
 import android.os.Bundle;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.app.Fragment;
@@ -13,8 +11,6 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Button;
-import android.widget.TextView;
 
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
@@ -28,8 +24,9 @@ import com.google.android.gms.maps.model.MarkerOptions;
 import java.util.ArrayList;
 
 import mehmetonar.com.marketim.R;
-import mehmetonar.com.marketim.data.AddPhotoBottomDialogFragment;
-import mehmetonar.com.marketim.data.LocationHelper;
+import mehmetonar.com.marketim.data.model.MarketModel;
+import mehmetonar.com.marketim.util.AddPhotoBottomDialogFragment;
+import mehmetonar.com.marketim.data.MarketHelper;
 import mehmetonar.com.marketim.util.GPSManager;
 
 
@@ -110,6 +107,7 @@ public class MapsFragment extends Fragment {
                     return;
                 }
                 googleMap.setMyLocationEnabled(true);
+
                 Log.i("location:",String.valueOf(location.longitude));
                 LatLng currentLocation = new LatLng(location.latitude,location.longitude);
 
@@ -117,7 +115,7 @@ public class MapsFragment extends Fragment {
                 getMarker();
 
 
-                float zoomLevel = (float) 12.0;
+                float zoomLevel = (float) 14.0;
                 googleMap.moveCamera(CameraUpdateFactory.newLatLngZoom(currentLocation, zoomLevel));
                 CameraPosition cameraPosition = new CameraPosition.Builder().target(currentLocation).zoom(zoomLevel).build();
                 googleMap.animateCamera(CameraUpdateFactory.newCameraPosition(cameraPosition));
@@ -149,14 +147,16 @@ public class MapsFragment extends Fragment {
             @Override
             public void run() {
                 try {
-                    LocationHelper locationHelper = new LocationHelper();
-                    ArrayList<LatLng> locationList = locationHelper.getMarkerLocation();
+                    MarketHelper marketHelper = new MarketHelper();
+                    ArrayList<MarketModel> marketList = (ArrayList<MarketModel>) marketHelper.getMarkerLocation();
 
-                    for (LatLng latLng:locationList){
+                    for (MarketModel model:marketList){
                         MarkerOptions markerOptions = new MarkerOptions();
-                        markerOptions.position(latLng);
-                        markerOptions.title("Marker Başlık");
-                        googleMap.animateCamera(CameraUpdateFactory.newLatLng(latLng));
+                        markerOptions.position(model.getLocation());
+                        markerOptions.title(model.getMarketName());
+                        markerOptions.snippet(model.getMarketAdress());
+
+                        googleMap.animateCamera(CameraUpdateFactory.newLatLng(model.getLocation()));
                         googleMap.addMarker(markerOptions);
 
                     }

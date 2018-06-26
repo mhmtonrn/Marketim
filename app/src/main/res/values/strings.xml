@@ -17,4 +17,5 @@
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
     <string name="lookup">Marketlere Gözat</string>
+    <string name="go_market_page">Market Sayfasına Gir</string>
 </resources>

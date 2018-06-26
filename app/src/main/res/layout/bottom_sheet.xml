@@ -41,7 +41,7 @@
 
     <TextView
         android:id="@+id/txt_market_satisfy"
-        android:layout_marginTop="19dp"
+        android:layout_marginTop="25dp"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:text="Marketten Memnuniyet" />
@@ -57,7 +57,7 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="30dp"
         android:background="@color/colorPrimary"
-        android:text="PROCEED PAYMENT"
+        android:text="@string/go_market_page"
         android:textColor="#fff"/>
 
 </LinearLayout>
