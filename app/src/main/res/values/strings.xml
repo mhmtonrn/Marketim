@@ -18,4 +18,5 @@
     <string name="hello_blank_fragment">Hello blank fragment</string>
     <string name="lookup">Marketlere Gözat</string>
     <string name="go_market_page">Market Sayfasına Gir</string>
+    <string name="title_activity_shopping">ShoppingActivity</string>
 </resources>

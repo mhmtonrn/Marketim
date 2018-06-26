@@ -2,6 +2,7 @@ package mehmetonar.com.marketim.util;
 
 import android.annotation.SuppressLint;
 import android.content.Context;
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.design.widget.BottomSheetDialogFragment;
@@ -15,9 +16,13 @@ import android.widget.TextView;
 import com.google.android.gms.maps.model.Marker;
 
 import mehmetonar.com.marketim.R;
+import mehmetonar.com.marketim.fragments.ShoppingActivity;
 
 @SuppressLint("ValidFragment")
 public class AddPhotoBottomDialogFragment extends BottomSheetDialogFragment {
+    public static final String MARKET_ID = "market";
+    public static final String MARKET_NAME = "market_name";
+
     //Component Declaration
     private Button goMarketPage;
     private TextView marketTitle;
@@ -60,6 +65,11 @@ public class AddPhotoBottomDialogFragment extends BottomSheetDialogFragment {
         goMarketPage.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+
+                Intent shoppingIntent = new Intent(context, ShoppingActivity.class);
+                shoppingIntent.putExtra(MARKET_ID,marker.getTitle());//marketın id buradan çekilecek
+                shoppingIntent.putExtra(MARKET_NAME,marker.getTitle());//marketın id buradan çekilecek
+                startActivity(shoppingIntent);
 
             }
         });
