@@ -5,5 +5,7 @@
     <color name="colorAccent">#f502b0</color>
 
     <color name="black_overlay">#66000000</color>
-    <color name="shoppingBackGorund">#cecdcd</color>
+    <color name="shoppingBackGorund">#f1efef</color>
+    <color name="shoppingBackGorundDark">#cccaca</color>
+    <color name="top_color">#b6639e</color>
 </resources>

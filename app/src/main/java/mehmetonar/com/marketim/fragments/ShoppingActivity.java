@@ -6,15 +6,26 @@ import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
 import android.view.View;
 import android.view.Window;
 import android.view.WindowManager;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import mehmetonar.com.marketim.R;
+import mehmetonar.com.marketim.adapter.HorizontalAdapter;
+import mehmetonar.com.marketim.data.model.Data;
 import mehmetonar.com.marketim.util.AddPhotoBottomDialogFragment;
 
 public class ShoppingActivity extends AppCompatActivity {
+
+    private RecyclerView horizontal_recycler_view;
+    private HorizontalAdapter horizontalAdapter;
+    private List<Data> data;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -37,17 +48,93 @@ public class ShoppingActivity extends AppCompatActivity {
                         .setAction("Action", null).show();
             }
         });
+
+
+        //top list
+        horizontal_recycler_view = findViewById(R.id.top_list_list);
+        data = fill_with_data();
+        horizontalAdapter = new HorizontalAdapter(data, getApplication());
+        LinearLayoutManager horizontalLayoutManager = new LinearLayoutManager(ShoppingActivity.this, LinearLayoutManager.HORIZONTAL, false);
+        horizontal_recycler_view.setLayoutManager(horizontalLayoutManager);
+        horizontal_recycler_view.setAdapter(horizontalAdapter);
+
+        //body list
+
+
     }
 
 
+    /**
+     *
+     *
+     *
+     *
+     *
+     *
+     *
+     *
+     *
+     *
+     *
+     *
+     *
+     *
+     *
+     *
+     *
+     *
+     *
+     *
+     *
+     *
+     *
+     *
+     *
+     *
+     *
+     *
+     *
+     *
+     *
+     *
+     *
+     *
+     *
+     *
+     *
+     *
+     *
+     *
+     *
+     *
+     *
+     *
+     *
+     * @return
+     */
+
+    private List<Data> fill_with_data() {
+        List<Data> data = new ArrayList<>();
+
+        data.add(new Data(android.R.mipmap.sym_def_app_icon, "Image 2"));
+        data.add(new Data(android.R.mipmap.sym_def_app_icon, "Image 2"));
+        data.add(new Data(android.R.mipmap.sym_def_app_icon, "Image 2"));
+        data.add(new Data(android.R.mipmap.sym_def_app_icon, "Image 2"));
+        data.add(new Data(android.R.mipmap.sym_def_app_icon, "Image 2"));
+        data.add(new Data(android.R.mipmap.sym_def_app_icon, "Image 2"));
+        data.add(new Data(android.R.mipmap.sym_def_app_icon, "Image 2"));
+        data.add(new Data(android.R.mipmap.sym_def_app_icon, "Image 2"));
+        data.add(new Data(android.R.mipmap.sym_def_app_icon, "Image 2"));
+        data.add(new Data(android.R.mipmap.sym_def_app_icon, "Image 2"));
+        data.add(new Data(android.R.mipmap.sym_def_app_icon, "Image 2"));
+        data.add(new Data(android.R.mipmap.sym_def_app_icon, "Image 2"));
+        data.add(new Data(android.R.mipmap.sym_def_app_icon, "Image 2"));
+        data.add(new Data(android.R.mipmap.sym_def_app_icon, "Image 2"));
 
 
+        return data;
 
-
-
-
-
-
+    }
 
 
     @SuppressLint("NewApi")
