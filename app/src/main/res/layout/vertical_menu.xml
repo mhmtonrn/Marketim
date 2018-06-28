@@ -3,8 +3,9 @@
     android:orientation="vertical"
     android:layout_marginTop="7dp"
     android:layout_marginBottom="7dp"
+    android:layout_marginLeft="7dp"
     android:background="@color/shoppingBackGorundDark"
-    android:padding="7dp"
+    android:paddingBottom="7dp"
     android:layout_width="100dp"
     android:layout_height="100dp">
 
@@ -13,7 +14,6 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:orientation="vertical"
-        android:background="@color/top_color"
         android:gravity="center"
         android:layout_marginRight="5dp"
         android:layout_height="match_parent">

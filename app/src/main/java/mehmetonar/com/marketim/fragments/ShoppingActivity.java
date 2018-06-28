@@ -6,6 +6,7 @@ import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
@@ -17,15 +18,25 @@ import java.util.ArrayList;
 import java.util.List;
 
 import mehmetonar.com.marketim.R;
-import mehmetonar.com.marketim.adapter.HorizontalAdapter;
+import mehmetonar.com.marketim.adapter.BodyListAdapter;
+import mehmetonar.com.marketim.adapter.TopListAdapter;
+import mehmetonar.com.marketim.data.ProductHelper;
 import mehmetonar.com.marketim.data.model.Data;
+import mehmetonar.com.marketim.data.model.ProductModel;
 import mehmetonar.com.marketim.util.AddPhotoBottomDialogFragment;
+import mehmetonar.com.marketim.util.Category;
+import mehmetonar.com.marketim.util.CategoryListener;
 
 public class ShoppingActivity extends AppCompatActivity {
 
+    //top list
     private RecyclerView horizontal_recycler_view;
-    private HorizontalAdapter horizontalAdapter;
+    private TopListAdapter topListAdapter;
     private List<Data> data;
+    //body list
+    private RecyclerView bodyRecycleView;
+    private BodyListAdapter bodyListAdapter;
+    private List<ProductModel> productModels;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -50,15 +61,40 @@ public class ShoppingActivity extends AppCompatActivity {
         });
 
 
+
+
+
+
         //top list
         horizontal_recycler_view = findViewById(R.id.top_list_list);
         data = fill_with_data();
-        horizontalAdapter = new HorizontalAdapter(data, getApplication());
+        topListAdapter = new TopListAdapter(data, getApplication(), new CategoryListener() {
+            @Override
+            public void onSuccessGettingProductsForCategory(ArrayList<ProductModel> productsForCategory) {
+                //body list
+                bodyRecycleView = findViewById(R.id.body_list_list);
+                bodyListAdapter = new BodyListAdapter(productsForCategory, getApplication());
+                LinearLayoutManager horizontalLayoutManagerBody = new LinearLayoutManager(ShoppingActivity.this,LinearLayoutManager.VERTICAL, false);
+                bodyRecycleView.setLayoutManager(new GridLayoutManager(getApplication(),2));
+                bodyRecycleView.setAdapter(bodyListAdapter);
+
+            }
+        });
+
         LinearLayoutManager horizontalLayoutManager = new LinearLayoutManager(ShoppingActivity.this, LinearLayoutManager.HORIZONTAL, false);
         horizontal_recycler_view.setLayoutManager(horizontalLayoutManager);
-        horizontal_recycler_view.setAdapter(horizontalAdapter);
+        horizontal_recycler_view.setAdapter(topListAdapter);
 
-        //body list
+
+
+
+
+
+
+
+
+
+
 
 
     }
@@ -116,9 +152,9 @@ public class ShoppingActivity extends AppCompatActivity {
     private List<Data> fill_with_data() {
         List<Data> data = new ArrayList<>();
 
-        data.add(new Data(android.R.mipmap.sym_def_app_icon, "Image 2"));
-        data.add(new Data(android.R.mipmap.sym_def_app_icon, "Image 2"));
-        data.add(new Data(android.R.mipmap.sym_def_app_icon, "Image 2"));
+        data.add(new Data(android.R.mipmap.sym_def_app_icon, Category.sebze));
+        data.add(new Data(android.R.mipmap.sym_def_app_icon, Category.meyve));
+        data.add(new Data(android.R.mipmap.sym_def_app_icon, Category.bakliyat));
         data.add(new Data(android.R.mipmap.sym_def_app_icon, "Image 2"));
         data.add(new Data(android.R.mipmap.sym_def_app_icon, "Image 2"));
         data.add(new Data(android.R.mipmap.sym_def_app_icon, "Image 2"));
