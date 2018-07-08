@@ -18,6 +18,7 @@ public class MarketHelper {
         markerList.add(new MarketModel("1","Durdu Bakkal","düzce",10,new LatLng(40.71939739873268,29.2296827539186)));
         markerList.add(new MarketModel("1","Ali Bakkal","istanbul",1,new LatLng(40.72739739873268,29.2011827539186)));
         markerList.add(new MarketModel("1","Veli Bakkal","ankara",1,new LatLng(40.72139739873268,29.2096827539186)));
+        markerList.add(new MarketModel("1","Veli Bakkal","ankara",1,new LatLng(39.96247933794853,32.70779774988111)));
 
 
 

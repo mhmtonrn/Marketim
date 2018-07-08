@@ -19,4 +19,6 @@
     <string name="lookup">Marketlere Gözat</string>
     <string name="go_market_page">Market Sayfasına Gir</string>
     <string name="title_activity_shopping">ShoppingActivity</string>
+    <string name="product_added_to_cart">sepete eklendi</string>
+    <string name="go_cart_page">Sepete Git</string>
 </resources>

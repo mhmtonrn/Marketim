@@ -46,7 +46,8 @@
         <activity
             android:name=".fragments.ShoppingActivity"
             android:label="@string/title_activity_shopping"
-            android:theme="@style/AppTheme.NoActionBar"></activity>
+            android:theme="@style/AppTheme.NoActionBar" />
+        <activity android:name=".fragments.CartActivity"></activity>
     </application>
 
 </manifest>

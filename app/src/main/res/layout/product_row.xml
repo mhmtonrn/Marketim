@@ -74,7 +74,7 @@
                 android:layout_marginRight="-7dp"
                 android:layout_marginBottom="-7dp"
                 android:layout_gravity="bottom|end"
-                android:src="@mipmap/baseline_add_shopping_cart_white_18dp" />
+                android:src="@android:drawable/ic_input_add" />
         </LinearLayout>
 
 

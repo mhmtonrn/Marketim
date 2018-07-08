@@ -21,11 +21,13 @@ import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 import android.widget.LinearLayout;
+import android.widget.Toast;
 
 import java.net.InetAddress;
 
 import mehmetonar.com.marketim.LayoutMainActivity;
 import mehmetonar.com.marketim.R;
+import mehmetonar.com.marketim.util.GPSManager;
 
 public class SplashActivity extends AppCompatActivity {
 
@@ -47,13 +49,12 @@ public class SplashActivity extends AppCompatActivity {
         handler = new Handler();
 
 
-
     }
 
     @Override
     protected void onStart() {
         super.onStart();
-        ActivityCompat.requestPermissions(this,new String[]{Manifest.permission.ACCESS_FINE_LOCATION}, 1);
+        ActivityCompat.requestPermissions(this, new String[]{Manifest.permission.ACCESS_FINE_LOCATION}, 1);
 
 
     }
@@ -95,7 +96,7 @@ public class SplashActivity extends AppCompatActivity {
     @Override
     public void startActivityForResult(Intent intent, int requestCode) {
         super.startActivityForResult(intent, requestCode);
-        if (requestCode==1){
+        if (requestCode == 1) {
             onStart();
 
         }
@@ -104,7 +105,7 @@ public class SplashActivity extends AppCompatActivity {
     @Override
     public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
         super.onRequestPermissionsResult(requestCode, permissions, grantResults);
-        Log.i("permissin string list: ","permissin string list: "+grantResults);
+        Log.i("permissin string list: ", "permissin string list: " + grantResults);
 
         switch (requestCode) {
             case 1: {
@@ -127,20 +128,22 @@ public class SplashActivity extends AppCompatActivity {
         handler.postDelayed(new Runnable() {
             @Override
             public void run() {
-                if (isInternetAvailable()||isNetworkConnected()){
+                if (isInternetAvailable() || isNetworkConnected()) {
                     locationManager = (LocationManager) getApplicationContext().getSystemService(LOCATION_SERVICE);
 
 
                     boolean isGPSEnabled = locationManager.isProviderEnabled(LocationManager.GPS_PROVIDER);
-                    if (isGPSEnabled){
+                    if (isGPSEnabled) {
+
                         startActivity(splashIntent);
+
                         finish();
-                    }else {
+                    } else {
                         showSettingsAlert();
 
-                }
+                    }
 
-                }else {
+                } else {
                     Snackbar snackbar = Snackbar
                             .make(layout, R.string.net_fail_message, Snackbar.LENGTH_INDEFINITE).setAction(R.string.open_net, new View.OnClickListener() {
                                 @Override
@@ -153,11 +156,11 @@ public class SplashActivity extends AppCompatActivity {
                 }
 
             }
-        },5000);
+        }, 5000);
     }
 
 
-    public void showSettingsAlert(){
+    public void showSettingsAlert() {
         AlertDialog.Builder alertDialog = new AlertDialog.Builder(this);
 
         //Setting Dialog Title
@@ -168,16 +171,16 @@ public class SplashActivity extends AppCompatActivity {
 
         //On pressing Settings button
         alertDialog.setPositiveButton("Settings", new DialogInterface.OnClickListener() {
-            public void onClick(DialogInterface dialog,int which){
+            public void onClick(DialogInterface dialog, int which) {
                 Intent intent = new Intent(Settings.ACTION_LOCATION_SOURCE_SETTINGS);
-                startActivityForResult(intent,1);
+                startActivityForResult(intent, 1);
 
             }
         });
 
         //On pressing cancel button
         alertDialog.setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
-            public void onClick(DialogInterface dialog,int which){
+            public void onClick(DialogInterface dialog, int which) {
                 dialog.cancel();
             }
 

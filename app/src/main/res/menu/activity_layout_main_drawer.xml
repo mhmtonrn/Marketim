@@ -9,9 +9,9 @@
             android:icon="@android:drawable/ic_dialog_map"
             android:title="@string/lookup" />
         <item
-            android:id="@+id/nav_gallery"
-            android:icon="@drawable/ic_menu_gallery"
-            android:title="Gallery" />
+            android:id="@+id/nav_cart"
+            android:icon="@mipmap/baseline_add_shopping_cart_black_18dp"
+            android:title="@string/go_cart_page" />
         <item
             android:id="@+id/nav_slideshow"
             android:icon="@drawable/ic_menu_slideshow"

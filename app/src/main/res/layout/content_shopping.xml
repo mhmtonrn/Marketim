@@ -6,9 +6,8 @@
     android:layout_height="match_parent"
     android:orientation="vertical"
     app:layout_behavior="@string/appbar_scrolling_view_behavior"
-    tools:context=".fragments.ShoppingActivity"
     android:background="@color/shoppingBackGorund"
-    tools:showIn="@layout/activity_shopping">
+    tools:showIn="@layout/fragment_shopping">
 
 
     <LinearLayout
@@ -26,12 +25,13 @@
     <LinearLayout
         android:layout_weight="6"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content">
+        android:layout_height="match_parent"
+        android:paddingTop="5dp">
 
         <android.support.v7.widget.RecyclerView
             android:id="@+id/body_list_list"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            android:layout_height="match_parent"
             />
     </LinearLayout>
 

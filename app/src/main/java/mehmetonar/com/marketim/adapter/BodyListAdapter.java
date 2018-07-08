@@ -1,6 +1,9 @@
 package mehmetonar.com.marketim.adapter;
 
+import android.annotation.SuppressLint;
 import android.content.Context;
+import android.graphics.Color;
+import android.support.annotation.Nullable;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
@@ -16,19 +19,20 @@ import mehmetonar.com.marketim.R;
 import java.util.Collections;
 import java.util.List;
 import mehmetonar.com.marketim.data.model.ProductModel;
+import mehmetonar.com.marketim.util.listeners.ProductSelectListener;
 
 public class BodyListAdapter extends RecyclerView.Adapter<BodyListAdapter.MyViewHolder> {
 
 
         List<ProductModel> horizontalList = Collections.emptyList();
         Context context;
+        ProductSelectListener productSelectListener;
 
 
-
-        public BodyListAdapter(List<ProductModel> horizontalList, Context context) {
+        public BodyListAdapter(List<ProductModel> horizontalList, Context context, @Nullable ProductSelectListener productSelectListener) {
             this.horizontalList = horizontalList;
             this.context = context;
-
+            this.productSelectListener= productSelectListener;
 
         }
 
@@ -65,18 +69,21 @@ public class BodyListAdapter extends RecyclerView.Adapter<BodyListAdapter.MyView
         public void onBindViewHolder(final MyViewHolder holder, final int position) {
 
             Picasso.get().load(horizontalList.get(position).getImageUrl()).into(holder.productImage);
-            //holder.productImage.setImage
             holder.productTitle.setText(horizontalList.get(position).getProductTitle());
             holder.productDesc.setText(horizontalList.get(position).getProductDesc());
             holder.productAmount.setText(horizontalList.get(position).getProductAmount());
 
 
             holder.fab.setOnClickListener(new View.OnClickListener() {
+                @SuppressLint("ResourceAsColor")
                 @Override
 
                 public void onClick(View v) {
                     String list = horizontalList.get(position).getProductTitle().toString();
-                    Toast.makeText(context, list, Toast.LENGTH_SHORT).show();
+                    //getting quentity
+
+                    productSelectListener.onProductAdd(2,horizontalList.get(position));
+                    Toast.makeText(context, list+R.string.product_added_to_cart, Toast.LENGTH_SHORT).show();
                 }
 
             });

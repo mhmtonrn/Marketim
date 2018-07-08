@@ -18,7 +18,7 @@ import mehmetonar.com.marketim.data.ProductHelper;
 import mehmetonar.com.marketim.data.model.Data;
 import mehmetonar.com.marketim.data.model.ProductModel;
 import mehmetonar.com.marketim.util.Category;
-import mehmetonar.com.marketim.util.CategoryListener;
+import mehmetonar.com.marketim.util.listeners.CategoryListener;
 
 
 public class TopListAdapter extends RecyclerView.Adapter<TopListAdapter.MyViewHolder> {

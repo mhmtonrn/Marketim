@@ -16,7 +16,7 @@ import android.widget.TextView;
 import com.google.android.gms.maps.model.Marker;
 
 import mehmetonar.com.marketim.R;
-import mehmetonar.com.marketim.fragments.ShoppingActivity;
+import mehmetonar.com.marketim.fragments.ShoppingFragment;
 
 @SuppressLint("ValidFragment")
 public class AddPhotoBottomDialogFragment extends BottomSheetDialogFragment {
@@ -66,10 +66,11 @@ public class AddPhotoBottomDialogFragment extends BottomSheetDialogFragment {
             @Override
             public void onClick(View v) {
 
-                Intent shoppingIntent = new Intent(context, ShoppingActivity.class);
-                shoppingIntent.putExtra(MARKET_ID,marker.getTitle());//marketın id buradan çekilecek
-                shoppingIntent.putExtra(MARKET_NAME,marker.getTitle());//marketın id buradan çekilecek
-                startActivity(shoppingIntent);
+                android.support.v4.app.FragmentTransaction ft = getActivity().getSupportFragmentManager().beginTransaction();
+                ft.replace(R.id.map_fragment,new ShoppingFragment(context,marker)).commit();
+                dismiss();
+
+
 
             }
         });

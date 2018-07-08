@@ -29,19 +29,21 @@ public class GPSManager extends Service implements LocationListener {
     boolean canGetLocation = false;
 
     Location location;// location
-    double latitude;//latitude
-    double longitude;//longitude
+    double latitude=0.0;//latitude
+    double longitude=0.0;//longitude
 
     //The minimum distance to change updates in meters.
-    private static final long MIN_DISTANCE_CHANGE_FOR_UPDATES = 10;//10 meters
+    private static final long MIN_DISTANCE_CHANGE_FOR_UPDATES = 1;//10 meters
 
     //The minimum time to change updates in milliseconds
-    private static final long MIN_TIME_BW_UPDATES = 1000*60*1; // 1 minute
+    private static final long MIN_TIME_BW_UPDATES = 1000*10*1; // 1 minute
 
     //Declaring LocationManager
     protected LocationManager locationManager;
+    private mehmetonar.com.marketim.util.listeners.LocationListener myLocationListener;
 
-    public GPSManager(Context context){
+    public GPSManager(Context context, mehmetonar.com.marketim.util.listeners.LocationListener myLocationListener){
+        this.myLocationListener = myLocationListener;
         this.mContext = context;
         getLocation();
         //onLocationChanged(location);
@@ -91,6 +93,7 @@ public class GPSManager extends Service implements LocationListener {
                             onLocationChanged(location);
                             latitude = location.getLatitude();
                             longitude = location.getLongitude();
+                            myLocationListener.onGettingLocation(location);
                         }
                     }
 
@@ -107,7 +110,7 @@ public class GPSManager extends Service implements LocationListener {
 
     @Override
     public void onLocationChanged(Location location){
-
+myLocationListener.onGettingLocation(location);
 
         latitude = location.getLatitude();
         longitude = location.getLongitude();
